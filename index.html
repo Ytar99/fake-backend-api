@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSONPlaceholder Clone API Documentation</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .header {
+        text-align: center;
+        color: white;
+        margin-bottom: 40px;
+        padding: 40px 0;
+      }
+      .header h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .header p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+      .card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .card h2 {
+        color: #4a5568;
+        border-bottom: 3px solid #667eea;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .card h2 i {
+        color: #667eea;
+      }
+      .endpoint {
+        background: #f7fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .endpoint:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      .method {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 6px;
+        color: white;
+        font-weight: bold;
+        font-size: 0.9rem;
+        margin-right: 10px;
+      }
+      .method.get {
+        background: #48bb78;
+      }
+      .method.post {
+        background: #4299e1;
+      }
+      .method.put {
+        background: #ed8936;
+      }
+      .method.delete {
+        background: #f56565;
+      }
+      .path {
+        font-family: "Courier New", monospace;
+        font-weight: bold;
+        color: #2d3748;
+      }
+      .description {
+        margin: 10px 0;
+        color: #4a5568;
+      }
+      .params {
+        background: #edf2f7;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+      }
+      .params h4 {
+        margin-bottom: 8px;
+        color: #2d3748;
+      }
+      .param {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .param:last-child {
+        border-bottom: none;
+      }
+      .param-name {
+        font-family: "Courier New", monospace;
+        font-weight: bold;
+        color: #2d3748;
+      }
+      .param-type {
+        color: #718096;
+        font-style: italic;
+      }
+      .param-desc {
+        color: #4a5568;
+        flex-grow: 1;
+        margin: 0 15px;
+      }
+      .example {
+        background: #1a202c;
+        color: #cbd5e0;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 15px 0;
+        overflow-x: auto;
+        font-family: "Courier New", monospace;
+        font-size: 0.9rem;
+      }
+      .example-title {
+        color: #e2e8f0;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+      .code-key {
+        color: #63b3ed;
+      }
+      .code-string {
+        color: #68d391;
+      }
+      .code-number {
+        color: #fbb6ce;
+      }
+      .code-boolean {
+        color: #f6ad55;
+      }
+      .footer {
+        text-align: center;
+        color: white;
+        margin-top: 40px;
+        padding: 20px;
+        opacity: 0.8;
+      }
+      .tab {
+        padding-left: 20px;
+      }
+      .double-tab {
+        padding-left: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🚀 JSONPlaceholder Clone API</h1>
+        <p>Полнофункциональный REST API для тестирования ваших приложений</p>
+      </div>
+
+      <div class="card">
+        <h2>📚 Общая информация</h2>
+        <p>Базовый URL: <strong>http://localhost:${PORT}</strong></p>
+        <p>Все ответы возвращаются в формате JSON</p>
+        <p>Для работы с приватными эндпоинтами требуется аутентификация</p>
+      </div>
+
+      <div class="card">
+        <h2>🔐 Аутентификация</h2>
+
+        <details class="endpoint">
+          <summary>
+            <span class="method post">POST</span>
+            <span class="path">/login</span>
+          </summary>
+          <div class="description">Вход в систему</div>
+          <div class="params">
+            <h4>Параметры тела запроса:</h4>
+            <div class="param">
+              <span class="param-name">email</span>
+              <span class="param-desc">Email пользователя</span>
+              <span class="param-type">string</span>
+            </div>
+            <div class="param">
+              <span class="param-name">password</span>
+              <span class="param-desc">Пароль пользователя</span>
+              <span class="param-type">string</span>
+            </div>
+          </div>
+          <div class="example">
+            <div class="example-title">Пример использования (JavaScript):</div>
+            <pre>
+async function login() {
+  const response = await fetch('http://localhost:${PORT}/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      <span class="code-key">email</span>: <span class="code-string">'user@example.com'</span>,
+      <span class="code-key">password</span>: <span class="code-string">'password123'</span>
+    })
+  });
+  
+  if (response.ok) {
+    const user = await response.json();
+    console.log('Logged in:', user);
+    localStorage.setItem('token', user.id); // Сохраняем ID пользователя
+  } else {
+    console.error('Login failed');
+  }
+}
+</pre>
+          </div>
+        </details>
+
+        <details class="endpoint">
+          <summary>
+            <span class="method post">POST</span>
+            <span class="path">/register</span>
+          </summary>
+          <div class="description">Регистрация нового пользователя</div>
+          <div class="params">
+            <h4>Параметры тела запроса:</h4>
+            <div class="param">
+              <span class="param-name">name</span>
+              <span class="param-desc">Полное имя (макс. 30 символов)</span>
+              <span class="param-type">string</span>
+            </div>
+            <div class="param">
+              <span class="param-name">username</span>
+              <span class="param-desc">Имя пользователя (макс. 30 символов)</span>
+              <span class="param-type">string</span>
+            </div>
+            <div class="param">
+              <span class="param-name">email</span>
+              <span class="param-desc">Email (макс. 50 символов)</span>
+              <span class="param-type">string</span>
+            </div>
+            <div class="param">
+              <span class="param-name">password</span>
+              <span class="param-desc">Пароль</span>
+              <span class="param-type">string</span>
+            </div>
+          </div>
+          <div class="example">
+            <div class="example-title">Пример использования (JavaScript):</div>
+            <pre>
+async function register() {
+  const response = await fetch('http://localhost:${PORT}/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      <span class="code-key">name</span>: <span class="code-string">'John Doe'</span>,
+      <span class="code-key">username</span>: <span class="code-string">'johndoe'</span>,
+      <span class="code-key">email</span>: <span class="code-string">'john@example.com'</span>,
+      <span class="code-key">password</span>: <span class="code-string">'password123'</span>,
+      <span class="code-key">address</span>: {
+        <span class="tab"><span class="code-key">street</span>: <span class="code-string">'123 Main St'</span>,</span>
+        <span class="tab"><span class="code-key">city</span>: <span class="code-string">'New York'</span></span>
+      }
+    })
+  });
+  
+  const result = await response.json();
+  if (response.ok) {
+    console.log('Registered:', result);
+  } else {
+    console.error('Registration failed:', result.error);
+  }
+}
+</pre>
+          </div>
+        </details>
+      </div>
+
+      <div class="card">
+        <h2>📝 Посты (Posts)</h2>
+
+        <details class="endpoint">
+          <summary>
+            <span class="method get">GET</span>
+            <span class="path">/posts</span>
+          </summary>
+          <div class="description">Получить список постов с пагинацией</div>
+          <div class="params">
+            <h4>Query параметры:</h4>
+            <div class="param">
+              <span class="param-name">page</span>
+              <span class="param-desc">Номер страницы (по умолчанию: 1)</span>
+              <span class="param-type">number</span>
+            </div>
+            <div class="param">
+              <span class="param-name">limit</span>
+              <span class="param-desc">Количество постов на странице (по умолчанию: 10)</span>
+              <span class="param-type">number</span>
+            </div>
+          </div>
+          <div class="example">
+            <div class="example-title">Пример использования (JavaScript):</div>
+            <pre>
+async function getPosts() {
+  const response = await fetch('http://localhost:${PORT}/posts?page=1&limit=5');
+  const posts = await response.json();
+  console.log('Posts:', posts);
+}
+</pre
+            >
+          </div>
+        </details>
+
+        <details class="endpoint">
+          <summary>
+            <span class="method post">POST</span>
+            <span class="path">/posts</span>
+          </summary>
+          <div class="description">Создать новый пост</div>
+          <div class="params">
+            <h4>Параметры тела запроса:</h4>
+            <div class="param">
+              <span class="param-name">title</span>
+              <span class="param-desc">Заголовок поста (макс. 50 символов)</span>
+              <span class="param-type">string</span>
+            </div>
+            <div class="param">
+              <span class="param-name">body</span>
+              <span class="param-desc">Текст поста (макс. 300 символов)</span>
+              <span class="param-type">string</span>
+            </div>
+            <div class="param">
+              <span class="param-name">userId</span>
+              <span class="param-desc">ID пользователя</span>
+              <span class="param-type">number</span>
+            </div>
+          </div>
+          <div class="example">
+            <div class="example-title">Пример использования (JavaScript):</div>
+            <pre>
+async function createPost() {
+  const response = await fetch('http://localhost:${PORT}/posts', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      <span class="code-key">title</span>: <span class="code-string">'Мой первый пост'</span>,
+      <span class="code-key">body</span>: <span class="code-string">'Это содержание моего первого поста...'</span>,
+      <span class="code-key">userId</span>: <span class="code-number">1</span>
+    })
+  });
+  
+  const newPost = await response.json();
+  console.log('Created post:', newPost);
+}
+</pre>
+          </div>
+        </details>
+
+        <details class="endpoint">
+          <summary>
+            <span class="method get">GET</span>
+            <span class="path">/posts/:id</span>
+          </summary>
+          <div class="description">Получить пост по ID</div>
+          <div class="example">
+            <div class="example-title">Пример использования (JavaScript):</div>
+            <pre>
+async function getPost() {
+  const response = await fetch('http://localhost:${PORT}/posts/1');
+  const post = await response.json();
+  console.log('Post:', post);
+}
+</pre
+            >
+          </div>
+        </details>
+
+        <details class="endpoint">
+          <summary>
+            <span class="method put">PUT</span>
+            <span class="path">/posts/:id</span>
+          </summary>
+          <div class="description">Обновить пост</div>
+          <div class="example">
+            <div class="example-title">Пример использования (JavaScript):</div>
+            <pre>
+async function updatePost() {
+  const response = await fetch('http://localhost:${PORT}/posts/1', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      <span class="code-key">title</span>: <span class="code-string">'Обновленный заголовок'</span>,
+      <span class="code-key">body</span>: <span class="code-string">'Обновленное содержание...'</span>
+    })
+  });
+  
+  const updatedPost = await response.json();
+  console.log('Updated post:', updatedPost);
+}
+</pre>
+          </div>
+        </details>
+
+        <details class="endpoint">
+          <summary>
+            <span class="method delete">DELETE</span>
+            <span class="path">/posts/:id</span>
+          </summary>
+          <div class="description">Удалить пост</div>
+          <div class="example">
+            <div class="example-title">Пример использования (JavaScript):</div>
+            <pre>
+async function deletePost() {
+  const response = await fetch('http://localhost:${PORT}/posts/1', {
+    method: 'DELETE'
+  });
+  
+  if (response.status === 204) {
+    console.log('Post deleted successfully');
+  }
+}
+</pre
+            >
+          </div>
+        </details>
+      </div>
+
+      <div class="card">
+        <h2>👥 Пользователи (Users)</h2>
+
+        <details class="endpoint">
+          <summary>
+            <span class="method get">GET</span>
+            <span class="path">/users</span>
+          </summary>
+          <div class="description">Получить список пользователей с пагинацией</div>
+          <div class="example">
+            <div class="example-title">Пример использования (JavaScript):</div>
+            <pre>
+async function getUsers() {
+  const response = await fetch('http://localhost:${PORT}/users?page=1&limit=10');
+  const users = await response.json();
+  console.log('Users:', users);
+}
+</pre
+            >
+          </div>
+        </details>
+
+        <details class="endpoint">
+          <summary>
+            <span class="method get">GET</span>
+            <span class="path">/users/:id</span>
+          </summary>
+          <div class="description">Получить пользователя по ID</div>
+          <div class="example">
+            <div class="example-title">Пример использования (JavaScript):</div>
+            <pre>
+async function getUser() {
+  const response = await fetch('http://localhost:${PORT}/users/1');
+  const user = await response.json();
+  console.log('User:', user);
+}
+</pre
+            >
+          </div>
+        </details>
+
+        <details class="endpoint">
+          <summary>
+            <span class="method put">PUT</span>
+            <span class="path">/users/:id</span>
+          </summary>
+          <div class="description">Обновить пользователя</div>
+          <div class="example">
+            <div class="example-title">Пример использования (JavaScript):</div>
+            <pre>
+async function updateUser() {
+  const response = await fetch('http://localhost:${PORT}/users/1', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      <span class="code-key">name</span>: <span class="code-string">'Новое имя'</span>,
+      <span class="code-key">email</span>: <span class="code-string">'new@email.com'</span>
+    })
+  });
+  
+  const updatedUser = await response.json();
+  console.log('Updated user:', updatedUser);
+}
+</pre>
+          </div>
+        </details>
+
+        <details class="endpoint">
+          <summary>
+            <span class="method delete">DELETE</span>
+            <span class="path">/users/:id</span>
+          </summary>
+          <div class="description">Удалить пользователя</div>
+          <div class="example">
+            <div class="example-title">Пример использования (JavaScript):</div>
+            <pre>
+async function deleteUser() {
+  const response = await fetch('http://localhost:${PORT}/users/1', {
+    method: 'DELETE'
+  });
+  
+  if (response.status === 204) {
+    console.log('User deleted successfully');
+  }
+}
+</pre
+            >
+          </div>
+        </details>
+      </div>
+
+      <div class="card">
+        <h2>🛠 Утилиты</h2>
+        <div class="example">
+          <div class="example-title">Полный пример приложения (JavaScript):</div>
+          <pre>
+class ApiClient {
+  <span class="code-key">constructor</span>(baseUrl) {
+    <span class="code-key">this</span>.baseUrl = baseUrl;
+  }
+
+  <span class="code-key">async</span> <span class="code-key">request</span>(endpoint, options = {}) {
+    <span class="code-key">const</span> response = <span class="code-key">await</span> fetch(<span class="code-key">this</span>.baseUrl + endpoint, {
+      headers: {
+        <span class="code-string">'Content-Type'</span>: <span class="code-string">'application/json'</span>,
+        ...options.headers
+      },
+      ...options
+    });
+
+    <span class="code-key">if</span> (response.status === 204) {
+      <span class="code-key">return</span> null;
+    }
+
+    <span class="code-key">const</span> data = <span class="code-key">await</span> response.json();
+
+    <span class="code-key">if</span> (!response.ok) {
+      <span class="code-key">throw new</span> Error(data.error || <span class="code-string">'Request failed'</span>);
+    }
+
+    <span class="code-key">return</span> data;
+  }
+
+  <span class="code-key">async</span> <span class="code-key">getPosts</span>(page = 1, limit = 10) {
+    <span class="code-key">return this</span>.request(<span class="code-string">\`/posts?page=\${page}&limit=\${limit}\`</span>);
+  }
+
+  <span class="code-key">async</span> <span class="code-key">createPost</span>(postData) {
+    <span class="code-key">return this</span>.request(<span class="code-string">'/posts'</span>, {
+      method: <span class="code-string">'POST'</span>,
+      body: JSON.stringify(postData)
+    });
+  }
+
+  <span class="code-key">async</span> <span class="code-key">login</span>(email, password) {
+    <span class="code-key">return this</span>.request(<span class="code-string">'/login'</span>, {
+      method: <span class="code-string">'POST'</span>,
+      body: JSON.stringify({ email, password })
+    });
+  }
+}
+
+<span class="code-key">const</span> api = <span class="code-key">new</span> ApiClient(<span class="code-string">'http://localhost:${PORT}'</span>);
+
+<span class="code-key">async</span> <span class="code-key">function</span> exampleUsage() {
+  <span class="code-key">try</span> {
+    <span class="code-comment">// Логин</span>
+    <span class="code-key">const</span> user = <span class="code-key">await</span> api.login(<span class="code-string">'user@example.com'</span>, <span class="code-string">'password'</span>);
+    console.log(<span class="code-string">'Logged in:'</span>, user);
+
+    <span class="code-comment">// Получить посты</span>
+    <span class="code-key">const</span> posts = <span class="code-key">await</span> api.getPosts(1, 5);
+    console.log(<span class="code-string">'Posts:'</span>, posts);
+
+    <span class="code-comment">// Создать пост</span>
+    <span class="code-key">const</span> newPost = <span class="code-key">await</span> api.createPost({
+      title: <span class="code-string">'Новый пост'</span>,
+      body: <span class="code-string">'Содержание нового поста'</span>,
+      userId: user.id
+    });
+    console.log(<span class="code-string">'Created post:'</span>, newPost);
+  } <span class="code-key">catch</span> (error) {
+    console.error(<span class="code-string">'Error:'</span>, error.message);
+  }
+}
+</pre>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>Бя</p>
+      </div>
+    </div>
+  </body>
+</html>
