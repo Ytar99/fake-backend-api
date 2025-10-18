@@ -312,10 +312,11 @@ function startServer() {
   app.get("/posts", (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
+    const userId = req.query.userId; // Получаем userId из query-параметров
     const offset = (page - 1) * limit;
 
-    db.all(
-      `
+    // Динамически формируем запрос в зависимости от наличия userId
+    let sql = `
       SELECT posts.*, 
              json_object(
                'id', users.id,
@@ -329,23 +330,32 @@ function startServer() {
              ) as user
       FROM posts 
       INNER JOIN users ON posts.userId = users.id
-      LIMIT ? OFFSET ?
-    `,
-      [limit, offset],
-      (err, rows) => {
-        if (err) return handleDbError(res, err);
+    `;
 
-        const posts = rows.map((row) => ({
-          id: row.id,
-          userId: row.userId,
-          title: row.title,
-          body: row.body,
-          user: JSON.parse(row.user),
-        }));
+    const params = [];
 
-        res.json(posts);
-      }
-    );
+    // Добавляем условие WHERE если userId указан
+    if (userId) {
+      sql += ` WHERE posts.userId = ? `;
+      params.push(userId);
+    }
+
+    sql += ` LIMIT ? OFFSET ? `;
+    params.push(limit, offset);
+
+    db.all(sql, params, (err, rows) => {
+      if (err) return handleDbError(res, err);
+
+      const posts = rows.map((row) => ({
+        id: row.id,
+        userId: row.userId,
+        title: row.title,
+        body: row.body,
+        user: JSON.parse(row.user),
+      }));
+
+      res.json(posts);
+    });
   });
 
   app.post("/posts", (req, res) => {

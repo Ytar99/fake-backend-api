@@ -183,7 +183,7 @@
 
       <div class="card">
         <h2>📚 Общая информация</h2>
-        <p>Базовый URL: <strong>http://localhost:${PORT}</strong></p>
+        <p>Базовый URL: <strong>http://localhost:3080</strong></p>
         <p>Все ответы возвращаются в формате JSON</p>
         <p>Для работы с приватными эндпоинтами требуется аутентификация</p>
       </div>
@@ -214,7 +214,7 @@
             <div class="example-title">Пример использования (JavaScript):</div>
             <pre>
 async function login() {
-  const response = await fetch('http://localhost:${PORT}/login', {
+  const response = await fetch('http://localhost:3080/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -270,7 +270,7 @@ async function login() {
             <div class="example-title">Пример использования (JavaScript):</div>
             <pre>
 async function register() {
-  const response = await fetch('http://localhost:${PORT}/register', {
+  const response = await fetch('http://localhost:3080/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -311,6 +311,11 @@ async function register() {
           <div class="params">
             <h4>Query параметры:</h4>
             <div class="param">
+              <span class="param-name">userId</span>
+              <span class="param-desc">Идентификатор пользователя</span>
+              <span class="param-type">number</span>
+            </div>
+            <div class="param">
               <span class="param-name">page</span>
               <span class="param-desc">Номер страницы (по умолчанию: 1)</span>
               <span class="param-type">number</span>
@@ -325,7 +330,7 @@ async function register() {
             <div class="example-title">Пример использования (JavaScript):</div>
             <pre>
 async function getPosts() {
-  const response = await fetch('http://localhost:${PORT}/posts?page=1&limit=5');
+  const response = await fetch('http://localhost:3080/posts?page=1&limit=5&userId=1');
   const posts = await response.json();
   console.log('Posts:', posts);
 }
@@ -362,7 +367,7 @@ async function getPosts() {
             <div class="example-title">Пример использования (JavaScript):</div>
             <pre>
 async function createPost() {
-  const response = await fetch('http://localhost:${PORT}/posts', {
+  const response = await fetch('http://localhost:3080/posts', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -391,7 +396,7 @@ async function createPost() {
             <div class="example-title">Пример использования (JavaScript):</div>
             <pre>
 async function getPost() {
-  const response = await fetch('http://localhost:${PORT}/posts/1');
+  const response = await fetch('http://localhost:3080/posts/1');
   const post = await response.json();
   console.log('Post:', post);
 }
@@ -410,7 +415,7 @@ async function getPost() {
             <div class="example-title">Пример использования (JavaScript):</div>
             <pre>
 async function updatePost() {
-  const response = await fetch('http://localhost:${PORT}/posts/1', {
+  const response = await fetch('http://localhost:3080/posts/1', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -438,7 +443,7 @@ async function updatePost() {
             <div class="example-title">Пример использования (JavaScript):</div>
             <pre>
 async function deletePost() {
-  const response = await fetch('http://localhost:${PORT}/posts/1', {
+  const response = await fetch('http://localhost:3080/posts/1', {
     method: 'DELETE'
   });
   
@@ -461,11 +466,24 @@ async function deletePost() {
             <span class="path">/users</span>
           </summary>
           <div class="description">Получить список пользователей с пагинацией</div>
+          <div class="params">
+            <h4>Query параметры:</h4>
+            <div class="param">
+              <span class="param-name">page</span>
+              <span class="param-desc">Номер страницы (по умолчанию: 1)</span>
+              <span class="param-type">number</span>
+            </div>
+            <div class="param">
+              <span class="param-name">limit</span>
+              <span class="param-desc">Количество постов на странице (по умолчанию: 10)</span>
+              <span class="param-type">number</span>
+            </div>
+          </div>
           <div class="example">
             <div class="example-title">Пример использования (JavaScript):</div>
             <pre>
 async function getUsers() {
-  const response = await fetch('http://localhost:${PORT}/users?page=1&limit=10');
+  const response = await fetch('http://localhost:3080/users?page=1&limit=10');
   const users = await response.json();
   console.log('Users:', users);
 }
@@ -484,7 +502,7 @@ async function getUsers() {
             <div class="example-title">Пример использования (JavaScript):</div>
             <pre>
 async function getUser() {
-  const response = await fetch('http://localhost:${PORT}/users/1');
+  const response = await fetch('http://localhost:3080/users/1');
   const user = await response.json();
   console.log('User:', user);
 }
@@ -503,7 +521,7 @@ async function getUser() {
             <div class="example-title">Пример использования (JavaScript):</div>
             <pre>
 async function updateUser() {
-  const response = await fetch('http://localhost:${PORT}/users/1', {
+  const response = await fetch('http://localhost:3080/users/1', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -531,7 +549,7 @@ async function updateUser() {
             <div class="example-title">Пример использования (JavaScript):</div>
             <pre>
 async function deleteUser() {
-  const response = await fetch('http://localhost:${PORT}/users/1', {
+  const response = await fetch('http://localhost:3080/users/1', {
     method: 'DELETE'
   });
   
@@ -596,7 +614,7 @@ class ApiClient {
   }
 }
 
-<span class="code-key">const</span> api = <span class="code-key">new</span> ApiClient(<span class="code-string">'http://localhost:${PORT}'</span>);
+<span class="code-key">const</span> api = <span class="code-key">new</span> ApiClient(<span class="code-string">'http://localhost:3080'</span>);
 
 <span class="code-key">async</span> <span class="code-key">function</span> exampleUsage() {
   <span class="code-key">try</span> {
