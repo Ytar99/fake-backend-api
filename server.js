@@ -4,10 +4,13 @@ import bcrypt from "bcryptjs";
 import { faker } from "@faker-js/faker";
 import open from "open";
 import path from "path";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 3080;
 const DB_FILE = "./database.sqlite";
+
+app.options("*", cors());
 
 app.use(express.json());
 
