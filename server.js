@@ -10,8 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3080;
 const DB_FILE = "./database.sqlite";
 
-app.options("*", cors());
-
+app.use(cors());
 app.use(express.json());
 
 // Инициализация БД с использованием промисов для правильной последовательности
