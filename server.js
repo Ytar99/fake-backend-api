@@ -342,6 +342,7 @@ function startServer() {
       params.push(userId);
     }
 
+    sql += ` ORDER BY posts.id DESC `;
     sql += ` LIMIT ? OFFSET ? `;
     params.push(limit, offset);
 
